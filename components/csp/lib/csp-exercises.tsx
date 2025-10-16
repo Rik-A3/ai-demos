@@ -15,7 +15,7 @@ export const EXERCISES: CSP[] = [
       { scope: ["A", "B"], type: "neq" },
       { scope: ["A", "C"], type: "neq" },
       {
-        scope: ["A", "D"],
+        scope: ["D", "A"],
         type: "custom",
         label: "= -1",
         predicate: ({ d, a }: Record<string, string>) =>
