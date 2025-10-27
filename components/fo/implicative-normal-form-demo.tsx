@@ -468,9 +468,8 @@ function standardizeApart(
         bodyRenamed = renameVarInFormula(n.body, v, v2);
         v = v2;
       }
-      const used2 = new Set(used);
-      used2.add(v);
-      const body = standardizeApart(bodyRenamed, used2);
+      used.add(v);
+      const body = standardizeApart(bodyRenamed, used);
       return { kind: "Forall", v, body };
     }
     case "Exists": {
@@ -481,25 +480,24 @@ function standardizeApart(
         bodyRenamed = renameVarInFormula(n.body, v, v2);
         v = v2;
       }
-      const used2 = new Set(used);
-      used2.add(v);
-      const body = standardizeApart(bodyRenamed, used2);
+      used.add(v);
+      const body = standardizeApart(bodyRenamed, used);
       return { kind: "Exists", v, body };
     }
     case "And":
       return {
         kind: "And",
-        left: standardizeApart(n.left, new Set(used)),
-        right: standardizeApart(n.right, new Set(used)),
+        left: standardizeApart(n.left, used),
+        right: standardizeApart(n.right, used),
       };
     case "Or":
       return {
         kind: "Or",
-        left: standardizeApart(n.left, new Set(used)),
-        right: standardizeApart(n.right, new Set(used)),
+        left: standardizeApart(n.left, used),
+        right: standardizeApart(n.right, used),
       };
     case "Not":
-      return { kind: "Not", sub: standardizeApart(n.sub, new Set(used)) };
+      return { kind: "Not", sub: standardizeApart(n.sub, used) };
     default:
       return n;
   }
